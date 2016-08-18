@@ -50,21 +50,7 @@
 	var ReactDOM = __webpack_require__(35);
 	var App = __webpack_require__(175);
 	
-	var getData = function getData() {
-		$.ajax({
-			url: 'http://www.omdbapi.com/?',
-			type: 'GET',
-			data: {
-				t: 'Frozen'
-			},
-			success: function success(data) {
-				console.log('DATA', data);
-			},
-			error: function error(_error) {
-				console.log('GET request failed', _error);
-			}
-		});
-	};
+	var defaultMovies = [];
 	
 	ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 
@@ -21489,7 +21475,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var React = __webpack_require__(1);
-	var MovieTable = __webpack_require__(177);
+	var MovieTable = __webpack_require__(176);
 	
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -21497,10 +21483,43 @@
 		function App(props) {
 			_classCallCheck(this, App);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+	
+			_this.state = {
+				movies: [{ poster: "http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg",
+					title: "Rocky",
+					year: "1976" }, { poster: "http://ia.media-imdb.com/images/M/MV5BMTM2OTUzNDE3NV5BMl5BanBnXkFtZTcwODczMzkzMQ@@._V1_SX300.jpg",
+					title: "Rocky Balboa",
+					year: "2006" }, { poster: "http://ia.media-imdb.com/images/M/MV5BNDIwNzgzMTUwN15BMl5BanBnXkFtZTcwMjA0NzE1NA@@._V1_SX300.jpg",
+					title: "Rocky II",
+					year: "1779" }]
+			};
+	
+			_this.getData('Rocky');
+			console.log(_this.state);
+			return _this;
 		}
 	
 		_createClass(App, [{
+			key: 'getData',
+			value: function getData(title, cb) {
+				var context = this;
+	
+				$.ajax({
+					url: 'http://www.omdbapi.com/?',
+					type: 'GET',
+					data: {
+						s: title
+					},
+					success: function success(data) {
+						context.setState({ movies: data });
+					},
+					error: function error(_error) {
+						console.log('GET request failed', _error);
+					}
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return React.createElement(
@@ -21508,10 +21527,10 @@
 					null,
 					React.createElement(
 						'h1',
-						null,
+						{ id: 'title' },
 						'Movie List'
 					),
-					React.createElement(MovieTable, null)
+					React.createElement(MovieTable, { updateMovies: this.getData.bind(this), movies: this.state.movies, id: 'movietable' })
 				);
 			}
 		}]);
@@ -21522,41 +21541,51 @@
 	module.exports = App;
 
 /***/ },
-/* 176 */,
-/* 177 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var MovieTableRow = __webpack_require__(178);
+	var MovieTableRow = __webpack_require__(177);
 	
-	var MovieTable = function MovieTable() {
+	var MovieTable = function MovieTable(_ref) {
+		var updateMovies = _ref.updateMovies;
+		var movies = _ref.movies;
 		return React.createElement(
 			'div',
 			null,
 			'MovieTable',
-			React.createElement(MovieTableRow, null)
+			movies.map(function (movie) {
+				return React.createElement(MovieTableRow, { movie: movie, 'class': 'movietablerow' });
+			})
 		);
 	};
 	
 	module.exports = MovieTable;
 
 /***/ },
-/* 178 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var MovieTable = __webpack_require__(177);
+	var MovieTable = __webpack_require__(176);
 	
-	var MovieTableRow = function MovieTableRow() {
-		return React.createElement(
-			'div',
-			null,
-			'Movie Table Row'
-		);
+	var MovieTableRow = function MovieTableRow(_ref) {
+			var movie = _ref.movie;
+			return React.createElement(
+					'div',
+					null,
+					React.createElement('img', { src: movie.poster }),
+					React.createElement(
+							'h3',
+							null,
+							movie.title
+					),
+					movie.year
+			);
 	};
 	
 	module.exports = MovieTableRow;
