@@ -21486,21 +21486,20 @@
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 	
 			_this.state = {
-				movies: [{ poster: "http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg",
-					title: "Rocky",
-					year: "1976" }, { poster: "http://ia.media-imdb.com/images/M/MV5BMTM2OTUzNDE3NV5BMl5BanBnXkFtZTcwODczMzkzMQ@@._V1_SX300.jpg",
-					title: "Rocky Balboa",
-					year: "2006" }, { poster: "http://ia.media-imdb.com/images/M/MV5BNDIwNzgzMTUwN15BMl5BanBnXkFtZTcwMjA0NzE1NA@@._V1_SX300.jpg",
-					title: "Rocky II",
-					year: "1779" }]
+				movies: []
 			};
 	
-			_this.getData('Rocky');
 			console.log(_this.state);
 			return _this;
 		}
 	
 		_createClass(App, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.getData('Batman');
+				console.log('did mount!!');
+			}
+		}, {
 			key: 'getData',
 			value: function getData(title, cb) {
 				var context = this;
@@ -21512,7 +21511,14 @@
 						s: title
 					},
 					success: function success(data) {
-						context.setState({ movies: data });
+						console.log(data);
+						var movies = data.Search.map(function (movie) {
+							return { poster: movie.Poster,
+								title: movie.Title,
+								year: movie.Year };
+						});
+	
+						context.setState({ movies: movies });
 					},
 					error: function error(_error) {
 						console.log('GET request failed', _error);
@@ -21530,7 +21536,7 @@
 						{ id: 'title' },
 						'Movie List'
 					),
-					React.createElement(MovieTable, { updateMovies: this.getData.bind(this), movies: this.state.movies, id: 'movietable' })
+					React.createElement(MovieTable, { updateMovies: this.getData.bind(this), movies: this.state.movies })
 				);
 			}
 		}]);
@@ -21554,10 +21560,9 @@
 		var movies = _ref.movies;
 		return React.createElement(
 			'div',
-			null,
-			'MovieTable',
+			{ id: 'movietable' },
 			movies.map(function (movie) {
-				return React.createElement(MovieTableRow, { movie: movie, 'class': 'movietablerow' });
+				return React.createElement(MovieTableRow, { movie: movie });
 			})
 		);
 	};
@@ -21570,23 +21575,70 @@
 
 	'use strict';
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
 	var React = __webpack_require__(1);
 	var MovieTable = __webpack_require__(176);
 	
-	var MovieTableRow = function MovieTableRow(_ref) {
-			var movie = _ref.movie;
-			return React.createElement(
-					'div',
-					null,
-					React.createElement('img', { src: movie.poster }),
-					React.createElement(
+	var MovieTableRow = function (_React$Component) {
+		_inherits(MovieTableRow, _React$Component);
+	
+		function MovieTableRow(props) {
+			_classCallCheck(this, MovieTableRow);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MovieTableRow).call(this, props));
+	
+			_this.state = {
+				hidden: true
+			};
+			return _this;
+		}
+	
+		_createClass(MovieTableRow, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				if (this.state.hidden) {
+	
+					return React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'h3',
+							{ onClick: function onClick() {
+									return _this2.setState({ hidden: !_this2.state.hidden });
+								} },
+							this.props.movie.title
+						)
+					);
+				} else {
+	
+					return React.createElement(
+						'div',
+						{ onClick: function onClick() {
+								return _this2.setState({ hidden: !_this2.state.hidden });
+							} },
+						React.createElement('img', { src: this.props.movie.poster }),
+						React.createElement(
 							'h3',
 							null,
-							movie.title
-					),
-					movie.year
-			);
-	};
+							this.props.movie.title
+						),
+						this.props.movie.year
+					);
+				}
+			}
+		}]);
+	
+		return MovieTableRow;
+	}(React.Component);
 	
 	module.exports = MovieTableRow;
 

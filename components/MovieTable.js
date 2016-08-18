@@ -2,10 +2,9 @@ var React = require('react');
 var MovieTableRow = require('./MovieTableRow');
 
 var MovieTable = ({updateMovies, movies}) => (
-		<div>
-			MovieTable
+		<div id="movietable">
 			{movies.map((movie) => (
-				<MovieTableRow movie={movie} class="movietablerow" />
+				<MovieTableRow movie={movie} />
 			))}
 		</div>
 )

@@ -1,5 +1,5 @@
 body {
-	background: red
+	background: blue;
 }
 
 #app {
@@ -14,3 +14,10 @@ body {
     margin-left: auto;
     margin-right: auto;
     font: 16px/34px Helvetica;
+}
+
+.movietable {
+    color: white;
+    border: solid #ddd;
+    background-color: grey;
+}

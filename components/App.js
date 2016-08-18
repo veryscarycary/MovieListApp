@@ -6,19 +6,15 @@ class App extends React.Component {
 		super(props)
 
 		this.state = {
-			movies: [{poster: "http://ia.media-imdb.com/images/M/MV5BMTY5MDMzODUyOF5BMl5BanBnXkFtZTcwMTQ3NTMyNA@@._V1_SX300.jpg",
-			title: "Rocky",
-			year: "1976"},
-			{poster: "http://ia.media-imdb.com/images/M/MV5BMTM2OTUzNDE3NV5BMl5BanBnXkFtZTcwODczMzkzMQ@@._V1_SX300.jpg",
-			title: "Rocky Balboa",
-			year: "2006"},
-			{poster: "http://ia.media-imdb.com/images/M/MV5BNDIwNzgzMTUwN15BMl5BanBnXkFtZTcwMjA0NzE1NA@@._V1_SX300.jpg",
-			title: "Rocky II",
-			year: "1779"}]
+			movies: [],
 		}
 
-		this.getData('Rocky');
 		console.log(this.state);
+	}
+
+	componentDidMount () {
+		this.getData('Batman');
+		console.log('did mount!!')
 	}
 
 	getData (title, cb) {
@@ -31,7 +27,14 @@ class App extends React.Component {
 				s: title
 			},
 			success: function (data) {
-				context.setState({movies: data});
+				console.log(data);
+				var movies = data.Search.map(function(movie) {
+					return {poster: movie.Poster,
+						title: movie.Title,
+						year: movie.Year}
+				});
+
+				context.setState({movies: movies});
 			},
 			error: function (error) {
 				console.log('GET request failed', error);
@@ -45,7 +48,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<h1 id="title">Movie List</h1>
-				<MovieTable updateMovies={this.getData.bind(this)} movies={this.state.movies} id="movietable"/>
+				<MovieTable updateMovies={this.getData.bind(this)} movies={this.state.movies} />
 			</div>
 		)
 	}
