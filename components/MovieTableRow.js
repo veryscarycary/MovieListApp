@@ -1,9 +1,11 @@
 var React = require('react');
 var MovieTable = require('./MovieTable');
 
-var MovieTableRow = () => (
+var MovieTableRow = ({movie}) => (
 		<div>
-			Movie Table Row
+		<img src={movie.poster} />
+		<h3>{movie.title}</h3>
+		{movie.year}
 		</div>
 )
 
