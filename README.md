@@ -1,0 +1,1 @@
+This is a starter react app that makes use of the OMDB movie API
