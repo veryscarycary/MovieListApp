@@ -1,6 +1,6 @@
 var React = require('react');
 var MovieTable = require('./MovieTable');
-// var Search = require('./Search');
+var Search = require('./Search');
 
 class App extends React.Component {
 	constructor (props) {
@@ -49,6 +49,7 @@ class App extends React.Component {
 		return (
 			<div>
 				<h1 id="title">Movie List</h1>
+				<Search updateMovies={this.getData.bind(this)} />
 				<MovieTable updateMovies={this.getData.bind(this)} movies={this.state.movies} />
 			</div>
 		)

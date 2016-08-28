@@ -21476,7 +21476,7 @@
 	
 	var React = __webpack_require__(1);
 	var MovieTable = __webpack_require__(176);
-	// var Search = require('./Search');
+	var Search = __webpack_require__(178);
 	
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -21537,6 +21537,7 @@
 						{ id: 'title' },
 						'Movie List'
 					),
+					React.createElement(Search, { updateMovies: this.getData.bind(this) }),
 					React.createElement(MovieTable, { updateMovies: this.getData.bind(this), movies: this.state.movies })
 				);
 			}
@@ -21642,6 +21643,70 @@
 	}(React.Component);
 	
 	module.exports = MovieTableRow;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var React = __webpack_require__(1);
+	
+	var Search = function (_React$Component) {
+		_inherits(Search, _React$Component);
+	
+		function Search(props) {
+			_classCallCheck(this, Search);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Search).call(this, props));
+	
+			_this.state = {
+				value: '',
+				buttonClicked: true
+			};
+			return _this;
+		}
+	
+		_createClass(Search, [{
+			key: 'inputHandler',
+			value: function inputHandler(event) {
+				this.props.updateMovies(this.state.value);
+			}
+		}, {
+			key: 'setStateSearch',
+			value: function setStateSearch(e) {
+				this.setState({
+					value: e.target.value
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return React.createElement(
+					'div',
+					null,
+					React.createElement('input', { type: 'text', onChange: this.setStateSearch.bind(this), Value: this.state.value }),
+					React.createElement(
+						'button',
+						{ onClick: this.inputHandler.bind(this) },
+						'Go'
+					)
+				);
+			}
+		}]);
+	
+		return Search;
+	}(React.Component);
+	
+	module.exports = Search;
 
 /***/ }
 /******/ ]);
