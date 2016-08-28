@@ -14,7 +14,7 @@ class MovieTableRow extends React.Component {
 		if (this.state.hidden) {
 
 			return (
-				<div>
+				<div className="row">
 					<h3 onClick={() => this.setState({hidden: !this.state.hidden}) }>{this.props.movie.title}</h3>
 				</div>
 			)
@@ -22,7 +22,7 @@ class MovieTableRow extends React.Component {
 		} else {
 
 			return (
-				<div onClick={() => this.setState({hidden: !this.state.hidden}) }>
+				<div className="row" onClick={() => this.setState({hidden: !this.state.hidden}) }>
 					<img src={this.props.movie.poster} />
 					<h3>{this.props.movie.title}</h3>
 					{this.props.movie.year}

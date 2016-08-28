@@ -21476,6 +21476,7 @@
 	
 	var React = __webpack_require__(1);
 	var MovieTable = __webpack_require__(176);
+	// var Search = require('./Search');
 	
 	var App = function (_React$Component) {
 		_inherits(App, _React$Component);
@@ -21496,7 +21497,7 @@
 		_createClass(App, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				this.getData('Batman');
+				this.getData('Cats');
 				console.log('did mount!!');
 			}
 		}, {
@@ -21609,7 +21610,7 @@
 	
 					return React.createElement(
 						'div',
-						null,
+						{ className: 'row' },
 						React.createElement(
 							'h3',
 							{ onClick: function onClick() {
@@ -21622,7 +21623,7 @@
 	
 					return React.createElement(
 						'div',
-						{ onClick: function onClick() {
+						{ className: 'row', onClick: function onClick() {
 								return _this2.setState({ hidden: !_this2.state.hidden });
 							} },
 						React.createElement('img', { src: this.props.movie.poster }),

@@ -1,5 +1,6 @@
 var React = require('react');
 var MovieTable = require('./MovieTable');
+// var Search = require('./Search');
 
 class App extends React.Component {
 	constructor (props) {
@@ -13,7 +14,7 @@ class App extends React.Component {
 	}
 
 	componentDidMount () {
-		this.getData('Batman');
+		this.getData('Cats');
 		console.log('did mount!!')
 	}
 
